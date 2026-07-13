@@ -1,0 +1,11 @@
+{
+  "validation_rows": 52173,
+  "positive_rate": 0.06114273666455829,
+  "roc_auc": 0.5813081270534841,
+  "pr_auc": 0.08956033276064025,
+  "top_fraction": 0.2,
+  "top_n": 10434,
+  "precision_at_top_k": 0.09469043511596703,
+  "recall_at_top_k": 0.30971786833855797,
+  "lift_at_top_k": 1.5486783922587297
+}

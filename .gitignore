@@ -1,0 +1,17 @@
+# 原始数据与中间特征：体积大，不上传 GitHub
+../data_format1/
+cache/
+
+# 可复现运行后生成的大文件
+outputs/*.csv
+
+# 保留可展示的项目结果
+!outputs/metrics.json
+!outputs/project_report.md
+!outputs/*.png
+
+# Python 运行产物
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.vscode/
