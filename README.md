@@ -45,6 +45,7 @@
 
 - [Power BI + MySQL 搭建说明](dashboard/POWER_BI_GUIDE.md)
 - [DAX 度量值](dashboard/DAX_MEASURES.md)
+- [Power BI 成果文件：天猫用户复购增长运营看板.pbix](dashboard/%E5%A4%A9%E7%8C%AB%E7%94%A8%E6%88%B7%E5%A4%8D%E8%B4%AD%E5%A2%9E%E9%95%BF%E8%BF%90%E8%90%A5%E7%9C%8B%E6%9D%BF.pbix)
 - [`advanced/mysql/03_create_dashboard_mart.sql`](advanced/mysql/03_create_dashboard_mart.sql)：MySQL 数据集市视图
 - [`dashboard/data/`](dashboard/data/)：可公开查看的聚合数据副本
 

@@ -55,13 +55,12 @@ v_growth_segment
 | 位置 | 视觉对象 | 数据源与字段 | 业务问题 |
 | --- | --- | --- | --- |
 | 顶部 | 4 张卡片 | 最终模型 AUC、Top20% Lift、整体复购率、高潜用户数 | 模型有没有价值、触达规模多大？ |
-| 左中 | 圆环图 | `v_growth_segment`：用户分层、user_count | 高潜用户有哪些？ |
-| 右中 | 条形图 | `v_behavior_repurchase`：behavior_segment、repeat_purchase_rate | 哪类行为人群优先运营？ |
-| 左下 | 簇状柱形图 | `model_evaluation`：model_name、roc_auc、top20_lift | 为什么最终选择逻辑回归？ |
-| 右下 | 表格 | `v_merchant_repurchase`：merchant_id、sample_count、repeat_purchase_rate、avg_merchant_actions | 哪些商家需要重点关注？ |
-| 右侧（可选） | 矩阵 | `v_demographic_repurchase`：age_group、gender_group、repeat_purchase_rate | 哪些画像人群表现不同？ |
+| 第二行左侧 | 圆环图 | `v_growth_segment`：`user_segment`、`user_count` | 高潜用户有哪些？ |
+| 第二行中左 | 簇状柱形图 | `v_behavior_repurchase`：`behavior_segment`、`repeat_purchase_rate` | 不同行为阶段的复购率是否存在差异？ |
+| 第二行中右 | 簇状柱形图 | `model_evaluation`：`model_name`、`roc_auc` | 为什么最终选择逻辑回归？ |
+| 第二行右侧 | 表格 | `v_growth_segment`：`user_segment`、`recommended_action`、`user_count` | 每类用户应采取什么运营动作？ |
 
-商家表格添加视觉对象级筛选：`sample_count >= 100`，并按 `repeat_purchase_rate` 降序；避免用极少样本的商家做结论。
+已完成的看板文件为 [`天猫用户复购增长运营看板.pbix`](%E5%A4%A9%E7%8C%AB%E7%94%A8%E6%88%B7%E5%A4%8D%E8%B4%AD%E5%A2%9E%E9%95%BF%E8%BF%90%E8%90%A5%E7%9C%8B%E6%9D%BF.pbix)，其数据源为本地 MySQL 业务视图；打开后可在 Power BI Desktop 中刷新数据。
 
 ## 5. 结果解释边界
 
