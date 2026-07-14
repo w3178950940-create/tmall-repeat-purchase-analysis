@@ -8,6 +8,7 @@ outputs/*.csv
 # 本地数据库和用户级 MySQL 导入文件
 advanced/database/
 advanced/mysql/analysis_base_mysql.csv
+advanced/mysql/growth_strategy_mysql.csv
 advanced/outputs/*.csv
 
 # 保留可展示的项目结果

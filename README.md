@@ -35,7 +35,7 @@
 - **MySQL 分析**：建表、导入、`CASE WHEN` 行为分层、`GROUP BY` 聚合、`HAVING` 小样本过滤、商家榜单。
 - **科学评估**：逻辑回归与随机森林公平比较；ROC-AUC、PR-AUC、Recall@Top20%、Lift@Top20% 和自助法置信区间。
 - **运营策略**：测试集中形成 51,730 名高潜老客、566 名高潜加购用户及低潜人群的差异化触达建议。
-- **Power BI**：提供可导入的聚合数据、DAX 度量值、页面布局和真实数据预览图。
+- **Power BI**：通过 MySQL 业务视图连接看板，提供 DAX 度量值、页面布局、真实数据预览图和可公开查看的聚合副本。
 
 ## Power BI：用户复购增长运营看板
 
@@ -43,9 +43,10 @@
 
 ![Power BI 用户复购增长运营看板预览](outputs/powerbi_dashboard_preview.png)
 
-- [Power BI 搭建说明](dashboard/POWER_BI_GUIDE.md)
+- [Power BI + MySQL 搭建说明](dashboard/POWER_BI_GUIDE.md)
 - [DAX 度量值](dashboard/DAX_MEASURES.md)
-- [`dashboard/data/`](dashboard/data/)：可直接导入的聚合数据
+- [`advanced/mysql/03_create_dashboard_mart.sql`](advanced/mysql/03_create_dashboard_mart.sql)：MySQL 数据集市视图
+- [`dashboard/data/`](dashboard/data/)：可公开查看的聚合数据副本
 
 ## MySQL SQL 代码示例
 
