@@ -1,58 +1,101 @@
 # 天猫用户复购预测与用户增长分析
 
-本项目使用 `data_format1` 的用户—商家标签、用户画像和全量行为日志，完成：
+面向产品数据分析岗位的端到端个人实战项目：从 5,492 万条用户行为日志中构建用户—商家特征，使用 MySQL 完成业务诊断，对比逻辑回归与随机森林，并输出可用于 Power BI 的用户增长运营看板数据。
 
-1. 诊断复购率与用户行为结构；
-2. 构建用户、用户—商家层面的行为特征；
-3. 训练复购倾向模型，并用 AUC、PR-AUC、Recall@Top20%、Lift@Top20% 评估；
-4. 对测试集用户输出运营分层与触达建议。
+## 业务问题
 
-## 运行
+大促后商家面临复购率低、全量触达成本高的问题。本项目以“识别高潜复购用户并支持差异化触达”为目标，按用户—商家粒度输出复购排序得分和运营人群。
 
-在 VS Code 中打开当前工作区后，在终端执行：
+## 实际运行结果
 
-```powershell
-python .\tmall_repurchase_project\src\run_pipeline.py
+以下指标均由本地代码实际运行得到；验证集采用 80/20 分层切分。
+
+| 指标 | 逻辑回归（最终模型） | 随机森林（对比模型） |
+| --- | ---: | ---: |
+| ROC-AUC | **0.6127** | 0.5813 |
+| PR-AUC | **0.1033** | 0.0896 |
+| Top20% 用户复购率 | **10.61%** | 9.47% |
+| Recall@Top20% | **34.70%** | 30.97% |
+| Lift@Top20% | **1.74** | 1.55 |
+
+逻辑回归相对随机森林的 AUC 差值 95% 配对自助法置信区间为 **[0.0220, 0.0403]**，因此选择逻辑回归作为当前复购排序模型。
+
+> 模型输出用于用户排序和分层。由于训练时使用类别权重，得分不表述为严格校准的真实复购概率；真实线上增量仍须通过 A/B 测试验证。
+
+## 项目流程
+
+```text
+业务痛点 → 数据质量校验 / SQL 诊断 → 特征构建 → 模型对比与评估
+       → 高潜用户分层 → Power BI 运营看板 → A/B 测试验证设计
 ```
 
-首次运行会读取约 1.9GB 的行为日志，耗时取决于电脑性能。运行完成后，在 `tmall_repurchase_project/outputs/` 查看：
+## 主要产出
 
-- `metrics.json`：模型指标；
-- `project_report.md`：可用于项目汇报的结论；
-- `test_repeat_purchase_predictions.csv`：测试集复购概率；
-- `user_growth_strategy.csv`：用户分层和运营建议；
-- `*.png`：数据与模型图表。
+- **数据诊断**：260,864 条训练样本、212,062 名用户、1,993 个商家；用户—商家组合重复数为 0。
+- **MySQL 分析**：建表、导入、`CASE WHEN` 行为分层、`GROUP BY` 聚合、`HAVING` 小样本过滤、商家榜单。
+- **科学评估**：逻辑回归与随机森林公平比较；ROC-AUC、PR-AUC、Recall@Top20%、Lift@Top20% 和自助法置信区间。
+- **运营策略**：测试集中形成 51,730 名高潜老客、566 名高潜加购用户及低潜人群的差异化触达建议。
+- **Power BI**：提供可导入的聚合数据、DAX 度量值、页面布局和真实数据预览图。
+
+## Power BI：用户复购增长运营看板
+
+看板聚焦“模型效果、高潜用户规模、用户分层、行为阶段复购率、模型对比、商家榜单”六类信息。
+
+![Power BI 用户复购增长运营看板预览](outputs/powerbi_dashboard_preview.png)
+
+- [Power BI 搭建说明](dashboard/POWER_BI_GUIDE.md)
+- [DAX 度量值](dashboard/DAX_MEASURES.md)
+- [`dashboard/data/`](dashboard/data/)：可直接导入的聚合数据
+
+## MySQL SQL 代码示例
+
+下图由项目中的真实 MySQL 查询文件渲染，包含项目总览、行为分层、数据质量和商家分析 SQL。
+
+![MySQL 业务分析 SQL 代码截图](docs/images/mysql_business_analysis_sql.png)
+
+- [建库建表 SQL](advanced/mysql/00_create_schema.sql)
+- [业务分析 SQL](advanced/mysql/01_business_analysis_mysql.sql)
+- [SQL 分析代码](advanced/01_sql_business_analysis.py)
+
+## 运行方式
+
+首次运行基础管道会分块处理约 1.9GB 行为日志并缓存特征：
+
+```cmd
+python tmall_repurchase_project\src\run_pipeline.py
+```
+
+运行进阶版最终模型、策略和 Power BI 数据：
+
+```cmd
+python tmall_repurchase_project\advanced\03_final_logistic_strategy.py
+```
+
+运行模型对比与自助法评估：
+
+```cmd
+python tmall_repurchase_project\advanced\02_model_comparison.py
+```
 
 ## 数据说明
 
-- `train_format1.csv`：训练标签；`label=1` 表示用户会再次购买该商家。
-- `test_format1.csv`：待预测的用户—商家组合。
-- `user_log_format1.csv`：行为明细。`action_type`：0 浏览、1 加购、2 购买、3 收藏。
+- `train_format1.csv`：用户—商家训练标签；`label=1` 表示复购。
+- `test_format1.csv`：待排序的用户—商家组合。
+- `user_log_format1.csv`：行为明细；`0=浏览`、`1=加购`、`2=购买`、`3=收藏`。
 - `user_info_format1.csv`：用户年龄段和性别。
 
-> 模型的离线指标不等于真实线上增长结果。线上策略必须通过 A/B 测试，以增量复购率、GMV 与 ROI 验证。
+原始数据、用户级预测名单、特征缓存和数据库文件均不上传仓库。
 
-## 本次运行结果
+## 项目结构
 
-基于全量 54,925,330 条行为日志运行得到：
-
-| 指标 | 结果 |
-| --- | ---: |
-| 训练样本复购率 | 6.11% |
-| ROC-AUC | 0.5813 |
-| PR-AUC | 0.0896 |
-| Top 20% 用户复购率 | 9.47% |
-| Recall@Top20% | 30.97% |
-| Lift@Top20% | 1.55x |
-
-因此，在离线验证集中，优先触达模型筛选出的前 20% 用户，可将复购密度从 6.11% 提升至 9.47%。详细分析见 [`outputs/project_report.md`](outputs/project_report.md)，图表见 `outputs/`。
-
-## 仓库结构
+详见 [项目结构说明](docs/PROJECT_STRUCTURE.md)。
 
 ```text
 tmall_repurchase_project/
-├── src/run_pipeline.py       # 全量日志处理、建模、分层的主程序
-├── outputs/                  # 可展示的报告、指标和图表
-├── requirements.txt          # 运行依赖
-└── .gitignore                # 排除原始数据和大体积中间文件
+├── src/                       # 基础管道
+├── advanced/                  # SQL、模型对比、最终策略
+├── dashboard/                 # Power BI 数据、DAX 与说明
+├── docs/                      # 项目结构与代码截图
+├── outputs/                   # 可展示图表、指标和报告
+└── requirements.txt
 ```

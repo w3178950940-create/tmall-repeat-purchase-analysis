@@ -1,0 +1,5 @@
+﻿metric,value,display_format
+训练集复购率,0.06115063788027478,percent
+验证集 ROC-AUC,0.612695390384624,decimal
+Top20% Lift,1.735209494160338,decimal
+高潜用户数,52296.0,integer

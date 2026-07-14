@@ -5,6 +5,11 @@ cache/
 # 可复现运行后生成的大文件
 outputs/*.csv
 
+# 本地数据库和用户级 MySQL 导入文件
+advanced/database/
+advanced/mysql/analysis_base_mysql.csv
+advanced/outputs/*.csv
+
 # 保留可展示的项目结果
 !outputs/metrics.json
 !outputs/project_report.md

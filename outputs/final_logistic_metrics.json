@@ -1,12 +1,11 @@
 {
-  "model": "logistic_regression",
   "validation_rows": 52173,
   "positive_rate": 0.06114273666455829,
   "roc_auc": 0.612695390384624,
   "pr_auc": 0.1032919561946282,
   "top_fraction": 0.2,
   "top_n": 10434,
-  "precision_at_top_k": 0.10609545715928695,
-  "recall_at_top_k": 0.3470219435736677,
-  "lift_at_top_k": 1.735209494160338
+  "top20_precision": 0.10609545715928695,
+  "top20_recall": 0.3470219435736677,
+  "top20_lift": 1.735209494160338
 }
