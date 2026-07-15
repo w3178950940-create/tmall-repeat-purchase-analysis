@@ -7,11 +7,11 @@ from pathlib import Path
 import pandas as pd
 
 
-PROJECT_DIR = Path(__file__).resolve().parents[2]
+PROJECT_DIR = Path(__file__).resolve().parents[1]
 WORKSPACE_DIR = PROJECT_DIR.parent
 TRAIN_PATH = WORKSPACE_DIR / "data_format1" / "train_format1.csv"
 FEATURE_PATH = PROJECT_DIR / "cache" / "pair_features.csv"
-EXPORT_PATH = Path(__file__).resolve().parent / "analysis_base_mysql.csv"
+EXPORT_PATH = PROJECT_DIR / "data" / "mysql_import" / "analysis_base_mysql.csv"
 
 COLUMN_RENAME = {
     "user_浏览_次数": "user_browse_cnt",
@@ -39,6 +39,7 @@ def main() -> None:
     if not FEATURE_PATH.exists():
         raise FileNotFoundError("未找到特征文件，请先运行完整项目管道。")
 
+    EXPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     print("读取训练集与特征缓存，准备 MySQL 导入文件…")
     train = pd.read_csv(TRAIN_PATH)
     features = pd.read_csv(FEATURE_PATH)

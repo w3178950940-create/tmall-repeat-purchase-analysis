@@ -1,15 +1,15 @@
 # 原始数据与中间特征：体积大，不上传 GitHub
 ../data_format1/
 cache/
+data/mysql_import/
 
 # 可复现运行后生成的大文件
 outputs/*.csv
 
-# 本地数据库和用户级 MySQL 导入文件
-advanced/database/
-advanced/mysql/analysis_base_mysql.csv
-advanced/mysql/growth_strategy_mysql.csv
-advanced/outputs/*.csv
+# 可复现运行后生成的明细结果
+outputs/business_diagnosis/*.csv
+outputs/model_evaluation/*.csv
+outputs/model_evaluation/*.log
 
 # 保留可展示的项目结果
 !outputs/metrics.json

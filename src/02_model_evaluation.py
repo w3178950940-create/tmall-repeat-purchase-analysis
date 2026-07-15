@@ -1,4 +1,4 @@
-"""Advanced module 2: compare a baseline model with random forest fairly.
+"""Step 3: compare a baseline model with random forest fairly.
 
 Both models use the same features and exactly the same stratified validation
 set. Besides point estimates, bootstrap confidence intervals are calculated
@@ -25,7 +25,7 @@ PROJECT_DIR = Path(__file__).resolve().parents[1]
 WORKSPACE_DIR = PROJECT_DIR.parent
 TRAIN_PATH = WORKSPACE_DIR / "data_format1" / "train_format1.csv"
 FEATURE_PATH = PROJECT_DIR / "cache" / "pair_features.csv"
-OUTPUT_DIR = PROJECT_DIR / "advanced" / "outputs"
+OUTPUT_DIR = PROJECT_DIR / "outputs" / "model_evaluation"
 
 
 def evaluate_top_k(y_true: np.ndarray, scores: np.ndarray, fraction: float = 0.2) -> dict[str, float]:

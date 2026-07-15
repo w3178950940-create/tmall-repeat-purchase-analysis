@@ -1,7 +1,7 @@
-"""Advanced module 3: train the selected logistic model and prepare dashboard data.
+"""Step 3: train the selected logistic model and prepare dashboard data.
 
 The logistic model was selected because it outperformed random forest in
-advanced/02_model_comparison.py on the same validation split.
+src/02_model_evaluation.py on the same validation split.
 """
 
 from __future__ import annotations
@@ -120,7 +120,7 @@ def build_dashboard_data(
     merchant_summary.to_csv(DASHBOARD_DATA_DIR / "top_merchant_summary.csv", index=False, encoding="utf-8-sig")
     coefficients.head(15).to_csv(DASHBOARD_DATA_DIR / "top_feature_coefficients.csv", index=False, encoding="utf-8-sig")
 
-    comparison_path = PROJECT_DIR / "advanced" / "outputs" / "model_comparison_metrics.csv"
+    comparison_path = PROJECT_DIR / "outputs" / "model_evaluation" / "model_comparison_metrics.csv"
     if comparison_path.exists():
         pd.read_csv(comparison_path).to_csv(
             DASHBOARD_DATA_DIR / "model_comparison_metrics.csv", index=False, encoding="utf-8-sig"
@@ -269,7 +269,7 @@ def main() -> None:
         json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     segment_counts = strategy["用户分层"].value_counts().to_dict()
-    report = f"""# 进阶版最终模型与用户增长策略\n\n
+    report = f"""# 最终模型与用户增长策略\n\n
 ## 模型选择\n\n
 在同一分层验证集上，逻辑回归的 ROC-AUC 为 {metrics['roc_auc']:.4f}、PR-AUC 为 {metrics['pr_auc']:.4f}，优于随机森林，因此作为最终复购排序模型。\n\n
 ## 离线验证结果\n\n

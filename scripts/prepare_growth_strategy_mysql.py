@@ -7,14 +7,15 @@ from pathlib import Path
 import pandas as pd
 
 
-PROJECT_DIR = Path(__file__).resolve().parents[2]
+PROJECT_DIR = Path(__file__).resolve().parents[1]
 SOURCE = PROJECT_DIR / "outputs" / "final_user_growth_strategy.csv"
-DESTINATION = Path(__file__).resolve().parent / "growth_strategy_mysql.csv"
+DESTINATION = PROJECT_DIR / "data" / "mysql_import" / "growth_strategy_mysql.csv"
 
 
 def main() -> None:
     if not SOURCE.exists():
-        raise FileNotFoundError("未找到最终策略文件，请先运行 advanced/03_final_logistic_strategy.py")
+        raise FileNotFoundError("未找到最终策略文件，请先运行 src/03_growth_strategy.py")
+    DESTINATION.parent.mkdir(parents=True, exist_ok=True)
     strategy = pd.read_csv(SOURCE)
     mysql_data = strategy.rename(
         columns={

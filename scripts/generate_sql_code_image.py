@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
-SOURCE = PROJECT_DIR / "advanced" / "mysql" / "01_business_analysis_mysql.sql"
+SOURCE = PROJECT_DIR / "sql" / "01_business_analysis_mysql.sql"
 DESTINATION = PROJECT_DIR / "docs" / "images" / "mysql_business_analysis_sql.png"
 
 
